@@ -99,11 +99,11 @@ class EPD:
     # Hardware reset
     def reset(self):
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200) 
+        epdconfig.delay_ms(200)
         epdconfig.digital_write(self.reset_pin, 0)
         epdconfig.delay_ms(10)
         epdconfig.digital_write(self.reset_pin, 1)
-        epdconfig.delay_ms(200)   
+        epdconfig.delay_ms(200)
 
     def send_command(self, command):
         epdconfig.digital_write(self.dc_pin, 0)
@@ -116,13 +116,13 @@ class EPD:
         epdconfig.digital_write(self.cs_pin, 0)
         epdconfig.spi_writebyte([data])
         epdconfig.digital_write(self.cs_pin, 1)
-        
+
     def ReadBusy(self):
         print("e-Paper busy")
         while(epdconfig.digital_read(self.busy_pin) == 0):      # 0: idle, 1: busy
             epdconfig.delay_ms(100)
         print("e-Paper busy release")
-        
+
     def set_lut(self):
         self.send_command(0x20)               # vcom
         for count in range(0, 44):
@@ -139,11 +139,11 @@ class EPD:
         self.send_command(0x24)         # bb b
         for count in range(0, 42):
             self.send_data(self.lut_wb[count])
-            
+
     def init(self):
         if (epdconfig.module_init() != 0):
             return -1
-            
+
         self.reset()
 
         self.send_command(0x04) # POWER_ON
@@ -151,7 +151,7 @@ class EPD:
 
         self.send_command(0x00) # PANEL_SETTING
         self.send_data(0xaf) #KW-BF   KWR-AF    BWROTP 0f
-        
+
         self.send_command(0x30) # PLL_CONTROL
         self.send_data(0x3a) #3A 100HZ   29 150Hz 39 200HZ    31 171HZ
 
@@ -181,7 +181,7 @@ class EPD:
         self.send_command(0xF8)
         self.send_data(0x90)
         self.send_data(0x00)
-        
+
         # Power optimization
         self.send_command(0xF8)
         self.send_data(0x93)
@@ -193,7 +193,7 @@ class EPD:
         self.send_data(0x41)
 
         self.send_command(0x82) # VCM_DC_SETTING_REGISTER
-        self.send_data(0x12)                   
+        self.send_data(0x12)
         self.send_command(0x50) # VCOM_AND_DATA_INTERVAL_SETTING
         self.send_data(0x87) # define by OTP
 
@@ -201,7 +201,7 @@ class EPD:
 
         self.send_command(0x16) # PARTIAL_DISPLAY_REFRESH
         self.send_data(0x00)
-        
+
         return 0
 
     def getbuffer(self, image):
@@ -233,27 +233,27 @@ class EPD:
         for i in range(0, self.width * self.height // 8):
             self.send_data(~imageblack[i])
         self.send_command(0x11)
-        
+
         self.send_command(0x13)
         for i in range(0, self.width * self.height // 8):
             self.send_data(~imagered[i])
         self.send_command(0x11)
-        
-        self.send_command(0x12) 
+
+        self.send_command(0x12)
         self.ReadBusy()
-        
+
     def Clear(self):
         self.send_command(0x10)
         for i in range(0, self.width * self.height // 8):
             self.send_data(0x00)
-        self.send_command(0x11) 
-        
+        self.send_command(0x11)
+
         self.send_command(0x13)
         for i in range(0, self.width * self.height // 8):
             self.send_data(0x00)
         self.send_command(0x11)
-        
-        self.send_command(0x12) 
+
+        self.send_command(0x12)
         self.ReadBusy()
 
     def sleep(self):
@@ -262,7 +262,6 @@ class EPD:
         self.send_command(0X02)
         self.send_command(0X07)
         self.send_data(0xA5)
-        
+
         epdconfig.module_exit()
 ### END OF FILE ###
-
