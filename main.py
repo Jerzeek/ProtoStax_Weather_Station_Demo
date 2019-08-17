@@ -14,8 +14,7 @@
 #   Written by Sridhar Rajagopal for ProtoStax.
 #   BSD license. All text above must be included in any redistribution
 # *
-import sys
-sys.path.append(r'lib')
+
 
 import signal
 import epd2in13b
@@ -134,7 +133,7 @@ def main():
             w2, h2 = font20.getsize(description)
             w3, h3 = fontweatherbig.getsize(weather_icon_dict[weather.get_weather_code()])
 
-            #drawblack.text((10, 0), location, font = font24, fill = 0)
+            drawblack.text((10, 0), location, font = font24, fill = 0)
             drawblack.text((10 , 25), description, font = font20, fill = 0)
             drawred.text((212 - w3 - 10, 0), weather_icon_dict[weather.get_weather_code()], font = fontweatherbig, fill = 0)
             drawblack.text((10, 45), "Observed at: " + time.strftime( '%d/%m', time.localtime(reftime)), font = font16, fill = 0)
@@ -142,17 +141,17 @@ def main():
             tempstr = str("{0}{1}C".format(int(round(temperature['temp'])), u'\u00b0'))
             print( tempstr)
             w4, h4 = font24.getsize(tempstr)
-            drawblack.text((10, 0), tempstr, font = font24, fill = 0)
-            drawred.text((10+w4, 0), "'", font = fontweather, fill = 0)
-            drawblack.text((80, 0), str("{0}{1} | {2}{3}".format(int(round(temperature['temp_min'])), u'\u00b0', int(round(temperature['temp_max'])), u'\u00b0')), font = font24, fill = 0)
+            drawblack.text((10, 60), tempstr, font = font24, fill = 0)
+            drawred.text((10+w4, 60), "'", font = fontweather, fill = 0)
+            drawblack.text((80, 60), str("{0}{1} | {2}{3}".format(int(round(temperature['temp_min'])), u'\u00b0', int(round(temperature['temp_max'])), u'\u00b0')), font = font24, fill = 0)
 
-            drawblack.text((10, 60), str("{} hPA".format(int(round(pressure['press'])))), font = font20, fill = 0)
-            drawblack.text((120, 60), str("{}% RH".format(int(round(humidity)))), font = font20, fill = 0)
+            #drawblack.text((10, 60), str("{} hPA".format(int(round(pressure['press'])))), font = font20, fill = 0)
+            #drawblack.text((120, 60), str("{}% RH".format(int(round(humidity)))), font = font20, fill = 0)
 
-            drawred.text((20, 80), "A", font = fontweather, fill = 0)
-            drawred.text((130, 80), "J", font = fontweather, fill = 0)
-            drawblack.text((10, 90), time.strftime( '%I:%M %p', time.localtime(sunrise)), font = font20, fill = 0)
-            drawblack.text((120, 90), time.strftime( '%I:%M %p', time.localtime(sunset)), font = font20, fill = 0)
+            drawred.text((0, 85), "A", font = fontweather, fill = 0)
+            drawred.text((110, 85), "J", font = fontweather, fill = 0)
+            drawblack.text((20, 85), time.strftime( '%I:%M %p', time.localtime(sunrise)), font = font20, fill = 0)
+            drawblack.text((130, 85), time.strftime( '%I:%M %p', time.localtime(sunset)), font = font20, fill = 0)
 
 
             epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRedimage))
