@@ -1,4 +1,4 @@
-epd2in13b#!/usr/bin/python
+#!/usr/bin/python
 # -*- coding:utf-8 -*-
 
 # ***************************************************
@@ -26,7 +26,7 @@ import traceback
 
 import pyowm
 
-owm = pyowm.OWM('REPLACE_WITH_YOUR_OWM_API_KEY')
+owm = pyowm.OWM('b8c41b16351aec6d923cef6ca06d404b')
 
 # You can invoke the weather apis by City Name, City ID, Lat/Long or
 # by Zip Code.
@@ -38,7 +38,7 @@ owm = pyowm.OWM('REPLACE_WITH_YOUR_OWM_API_KEY')
 #
 
 # REPLACE WITH YOUR CITY ID
-city_id = 5375480 # Mountain View, CA, USA
+city_id = 2757345 # Mountain View, CA, USA
 
 # An easy way to display icons and artwork on your ePaper display is to use a font like
 # Meteocons, which maps font letters to specific icons, so by printing a character "B" you can print
@@ -119,7 +119,7 @@ def main():
 
             # Drawing on the Horizontal image
             HBlackimage = Image.new('1', (epd2in13b.EPD_HEIGHT, epd2in13b.EPD_WIDTH), 255)  # 298*126
-            HRedimage = Image.new('1', (epd2in13b.EPD_HEIGHT, epd2in13b.EPD_WIDTH), 255)  # 298*126    
+            HRedimage = Image.new('1', (epd2in13b.EPD_HEIGHT, epd2in13b.EPD_WIDTH), 255)  # 298*126
 
             print("Drawing")
             drawblack = ImageDraw.Draw(HBlackimage)
