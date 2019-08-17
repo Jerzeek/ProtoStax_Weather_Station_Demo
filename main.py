@@ -133,10 +133,10 @@ def main():
             w2, h2 = font20.getsize(description)
             w3, h3 = fontweatherbig.getsize(weather_icon_dict[weather.get_weather_code()])
 
-            drawblack.text((10, 0), location, font = font24, fill = 0)
+            drawblack.text((10, 0), location + time.strftime( '%d-%m', time.localtime(reftime)), font = font24, fill = 0)
             drawblack.text((10 , 25), description, font = font20, fill = 0)
             drawred.text((212 - w3 - 10, 0), weather_icon_dict[weather.get_weather_code()], font = fontweatherbig, fill = 0)
-            drawblack.text((10, 45), "Observed at: " + time.strftime( '%d/%m', time.localtime(reftime)), font = font16, fill = 0)
+            #drawblack.text((10, 45), "Observed at: " , font = font16, fill = 0)
 
             tempstr = str("{0}{1}C".format(int(round(temperature['temp'])), u'\u00b0'))
             print( tempstr)
@@ -148,13 +148,13 @@ def main():
             #drawblack.text((10, 60), str("{} hPA".format(int(round(pressure['press'])))), font = font20, fill = 0)
             #drawblack.text((120, 60), str("{}% RH".format(int(round(humidity)))), font = font20, fill = 0)
 
-            drawred.text((0, 85), "A", font = fontweather, fill = 0)
-            drawred.text((110, 85), "J", font = fontweather, fill = 0)
-            drawblack.text((20, 85), time.strftime( '%I:%M %p', time.localtime(sunrise)), font = font20, fill = 0)
-            drawblack.text((130, 85), time.strftime( '%I:%M %p', time.localtime(sunset)), font = font20, fill = 0)
+            drawred.text((0, 80), "A", font = fontweather, fill = 0)
+            drawred.text((110, 80), "J", font = fontweather, fill = 0)
+            drawblack.text((25, 85), time.strftime( '%I:%M %p', time.localtime(sunrise)), font = font20, fill = 0)
+            drawblack.text((135, 85), time.strftime( '%I:%M %p', time.localtime(sunset)), font = font20, fill = 0)
 
 
-            epd.display(epd.getbuffer(HBlackimage), epd.getbuffer(HRedimage))
+            epd.display(epd.getbuffer(HBlackimage.rotate(180)), epd.getbuffer(HRedimage.rotate(180)))
             time.sleep(2)
 
             epd.sleep()
