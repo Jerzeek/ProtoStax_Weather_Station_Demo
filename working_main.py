@@ -96,6 +96,32 @@ def main():
 
             epd.sleep()
 
-except:
-    print('traceback.format_exc():\n%s',traceback.format_exc())
-    exit()
+        except:
+            print('traceback.format_exc():\n%s',traceback.format_exc())
+            exit()
+# gracefully exit without a big exception message if possible
+def ctrl_c_handler(signal, frame):
+    print('Goodbye!')
+    # XXX : TODO
+    #
+    # To preserve the life of the ePaper display, it is best not to keep it powered up -
+    # instead putting it to sleep when done displaying, or cutting off power to it altogether.
+    #
+    # epdconfig.module_exit() shuts off power to the module and calls GPIO.cleanup()
+    # The latest epd library chooses to shut off power (call module_exit) even when calling epd.sleep()
+    # epd.sleep() calls epdconfig.module_exit(), which in turns calls cleanup().
+    # We can therefore end up in a situation calling GPIO.cleanup twice
+    #
+    # Need to cleanup Waveshare epd code to call GPIO.cleanup() only once
+    # for now, calling epdconfig.module_init() to set up GPIO before calling module_exit to make sure
+    # power to the ePaper display is cut off on exit
+    # I have also modified epdconfig.py to initialize SPI handle in module_init() (vs. at the global scope)
+    # because slepe/module_exit closes the SPI handle, which wasn't getting initialized in module_init
+    epdconfig.module_init()
+    epdconfig.module_exit()
+    exit(0)
+
+signal.signal(signal.SIGINT, ctrl_c_handler)
+
+if __name__ == '__main__':
+    main()
