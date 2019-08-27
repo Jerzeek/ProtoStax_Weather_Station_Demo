@@ -25,7 +25,7 @@ import traceback
 
 import pyowm
 
-owm = pyowm.OWM('b8c41b16351aec6d923cef6ca06d404b')
+owm = pyowm.OWM('YOUR_API_KEY')
 
 # You can invoke the weather apis by City Name, City ID, Lat/Long or
 # by Zip Code.
@@ -34,10 +34,10 @@ owm = pyowm.OWM('b8c41b16351aec6d923cef6ca06d404b')
 # Find your own city id here:
 # http://bulk.openweathermap.org/sample/city.list.json.gz
 # Replace city_id below with the city id of your choice
-#
+# THE NUMBER YOU GET AFTER SELECTING A CITY FROM https://openweathermap.org
 
 # REPLACE WITH YOUR CITY ID
-city_id = 2757345 # Mountain View, CA, USA
+city_id = YOUR_CITY_KEY # Mountain View, CA, USA
 
 # An easy way to display icons and artwork on your ePaper display is to use a font like
 # Meteocons, which maps font letters to specific icons, so by printing a character "B" you can print
